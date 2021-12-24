@@ -143,4 +143,4 @@ if __name__ == '__main__':
             # we break out of the programme main while loop  as the interface() function returned False meaning the folder is empty
             break
     else:
-        print('-'*100, '\nThank you for using the Brute-force-PDF-Decryptor!\n', '-'*100)
+        print('-'*100, '\nThank you for using the Brute-force-PDF-Breaker!\n', '-'*100)
