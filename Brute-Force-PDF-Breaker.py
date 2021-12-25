@@ -138,7 +138,7 @@ if __name__ == '__main__':
             # except catches any problems that prevents us from opening the pdf.
             except Exception as exc:
                 print(
-                    '-'*100, "\nsomething went wrong with the Pdf, Try checking the pdfs in the folder are correct !"+exc+'\n'+'-'*100)
+                    '-'*100, "\nsomething went wrong with the Pdf, Try checking the pdfs in the folder are correct !", '-'*100)
         else:
             # we break out of the programme main while loop  as the interface() function returned False meaning the folder is empty
             break
