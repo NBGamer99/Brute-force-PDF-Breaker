@@ -70,19 +70,23 @@ def interface():
     print('-'*100, '\nThis programme will try to decrypt your encrypted pdf files in the provided folder.\n',
           '-'*100, '\nName', '\t'*10, 'Encrypted\n', '-'*100)
     # this loop is able to filter any unwanted files as it catches only files ending with .pdf and appending them to the PDF
-    for root, dirs, files in os.walk(path):
-        for file in files:
-            if file.endswith(".pdf") == 1:
-                # we always need to test our pdf files before passing them as some can be corrupted.
-                testpdf = open(root+'//'+file, 'rb')
-                test_pdf_reader = PyPDF2.PdfFileReader(testpdf)
-                foundPDF = True
-                print(f'[{pdf_index}] --> '+file+'\r' + '\t' *
-                      10 + str(test_pdf_reader.isEncrypted))
-                # appending the full path of each pdf found to the list so it can be used later.
-                PDFroots.append(root+'//'+file)
-                pdf_index += 1
-                testpdf.close()
+    try:
+        for root, dirs, files in os.walk(path):
+            for file in files:
+                if file.endswith(".pdf") == 1:
+                    # we always need to test our pdf files before passing them as some can be corrupted.
+                    testpdf = open(root+'//'+file, 'rb')
+                    test_pdf_reader = PyPDF2.PdfFileReader(testpdf)
+                    foundPDF = True
+                    print(f'[{pdf_index}] --> '+file+'\r' + '\t' *
+                          10 + str(test_pdf_reader.isEncrypted))
+                    # appending the full path of each pdf found to the list so it can be used later.
+                    PDFroots.append(root+'//'+file)
+                    pdf_index += 1
+                    testpdf.close()
+    except Exception as exc:
+        print(
+            '-'*100, "\nsomething went wrong with the Pdf, Try checking the pdfs in the folder are correct !\n", '-'*100)
 
     if foundPDF == False:
         print('-'*100, "\nno file found under the extension of PDF, try adding some pdf files !\n", '-'*100)
@@ -107,38 +111,35 @@ if __name__ == '__main__':
     while(nextmove.lower() != 'q'):
         # checking the interface output, to see if it can processed to the next part of the code or just break out of it.
         if interface() == True:
-            try:
-                while(True):
-                    # this part of the code take care of any miss input by the user when entering the choosed pdf number
-                    try:
-                        n = int(input(""))
-                    except ValueError as e:
-                        print(
-                            '-'*100, "\nWrong index,try choosing from the listed numbers !\n", '-'*100)
-                        # continue here serve a reset going back to the start of the while loop
-                        continue
-                    if n < 0 or n >= len(PDFroots):
-                        print(
-                            '-'*100, "\nWrong index,out of list bound !\n", '-'*100)
-                        continue
-                    # we open the choosen pdf using the open function with rb as an argument, then the user chosen pdf is assigned
-                    # to a variable called pdf.
-                    pdf = open(PDFroots[n], 'rb')
-                    # pdf.FileReader offers functions that help in reading & viewing the pdf file. It offers various functions using which you can filter
-                    # the pdf on the basis of the page number, content, page mode, etc.
-                    pdf_reader = PyPDF2.PdfFileReader(pdf)
-                    break
-                # calling the Decrypt_pdf function to start cracking the password while passing the pdf_reader and text list as arguments
-                Decrypt_pdf(pdf_reader, text)
-                # grabing the user input for what to do next
-                nextmove = input(
-                    '-'*100 + '\nType Q and press enter to exit ... ')
-                # closing the opened pdf
-                pdf.close()
-            # except catches any problems that prevents us from opening the pdf.
-            except Exception as exc:
-                print(
-                    '-'*100, "\nsomething went wrong with the Pdf, Try checking the pdfs in the folder are correct !", '-'*100)
+            while(True):
+                # this part of the code take care of any miss input by the user when entering the choosed pdf number
+                try:
+                    n = int(input(""))
+                except ValueError as e:
+                    print(
+                        '-'*100, "\nWrong index,try choosing from the listed numbers !\n", '-'*100)
+                    # continue here serve a reset going back to the start of the while loop
+                    continue
+                if n < 0 or n >= len(PDFroots):
+                    print(
+                        '-'*100, "\nWrong index,out of list bound !\n", '-'*100)
+                    continue
+                # we open the choosen pdf using the open function with rb as an argument, then the user chosen pdf is assigned
+                # to a variable called pdf.
+                pdf = open(PDFroots[n], 'rb')
+                # pdf.FileReader offers functions that help in reading & viewing the pdf file. It offers various functions using which you can filter
+                # the pdf on the basis of the page number, content, page mode, etc.
+                pdf_reader = PyPDF2.PdfFileReader(pdf)
+                break
+            # calling the Decrypt_pdf function to start cracking the password while passing the pdf_reader and text list as arguments
+            Decrypt_pdf(pdf_reader, text)
+            # grabing the user input for what to do next
+            nextmove = input(
+                '-'*100 + '\nType Q and press enter to exit ... ')
+            # closing the opened pdf
+            pdf.close()
+        # except catches any problems that prevents us from opening the pdf.
+
         else:
             # we break out of the programme main while loop  as the interface() function returned False meaning the folder is empty
             break

@@ -1,9 +1,9 @@
 import os
 import time
 # import datetime
-t1 = time.time()
-time.sleep(5)
-t2 = time.time()
+# t1 = time.time()
+# time.sleep(5)
+# t2 = time.time()
 # # t = time.ctime(t2-t1)
 # t = t2 - t1
 # # print('time is ', time.strftime(" %H:%M:%S", t))
@@ -15,9 +15,9 @@ t2 = time.time()
 mypath = (os.path.realpath(os.path.dirname(__file__)))
 path = os.path.join(mypath, "PUT YOUR PDF HERE !!")
 # print(mypath)
-print(__file__)
-print(os.path.dirname(__file__))
-print(os.path.join(mypath, "PUT YOUR PDF HERE !!"))
+# print(__file__)
+# print(os.path.dirname(__file__))
+# print(os.path.join(mypath, "PUT YOUR PDF HERE !!"))
 # print(path)
 # print(path)
 # for root, dirs, files in os.w alk(path):
@@ -25,14 +25,19 @@ print(os.path.join(mypath, "PUT YOUR PDF HERE !!"))
 # print(root)
 # print(dirs)
 # # print(files)
-# for root, dirs, files in os.walk(path):
-#     for name in files:
-#         print('name :', os.path.join(root, name))
-#     for name in dirs:
-#         print('dires :', os.path.join(root, name))
-#     print('root', root)
+files = []
+for hhh in os.walk(path):
+    print('-'*100)
+    print(list(hhh))
+    files.append(hhh)
+    print('-'*100)
 # # l1 = []
 # if not l1:
 #     print('empty')
+print('-'*100)
+print(list(files[1])[0])
 # else:
 #     print('not empty list')
+# root = list(os.walk(mypath))
+# print(list(root))
+# print(root)
